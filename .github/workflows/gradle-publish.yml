@@ -1,7 +1,10 @@
 name: Gradle Publish
 
 on:
-  workflow_call
+  workflow_call:
+    secrets:
+      NEXUS_REPO_PASSWORD:
+        required: true
 
 jobs:
   gradle-publish:
