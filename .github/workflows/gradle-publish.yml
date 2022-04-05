@@ -5,6 +5,8 @@ on:
     secrets:
       NEXUS_REPO_PASSWORD:
         required: true
+      TEAMS_IDN_WH_URL:
+        required: true
 
 jobs:
   gradle-publish:
