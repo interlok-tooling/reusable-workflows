@@ -26,12 +26,12 @@ jobs:
     - name: Execute Gradle build
       run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon -PverboseTests=true check
     - name: codecov.io
-      if: ${{!github.event.repository.private}}
+      if: ${{ !github.event.repository.private }}
       uses: codecov/codecov-action@v2.1.0
     - name: Gradle Dependency Check Analyze
       run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze
     - name: Notify Teams About Failure and Recovery
-      if: ${{ secrets.TEAMS_IDN_WH_URL }}
+      if: ${{ github.event.secrets.TEAMS_IDN_WH_URL }}
       uses: interlok-tooling/notify-teams@v1
       with:
         teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
