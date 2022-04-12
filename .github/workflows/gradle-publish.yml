@@ -39,6 +39,7 @@ jobs:
         ORG_GRADLE_PROJECT_repoUsername: deployment
         ORG_GRADLE_PROJECT_repoPassword: ${{ secrets.NEXUS_REPO_PASSWORD }}
     - name: Notify Teams About Failure and Recovery
+      if: always()
       uses: interlok-tooling/notify-teams@v1
       with:
         teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
