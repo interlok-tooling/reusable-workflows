@@ -3,6 +3,8 @@ name: Gradle Check
 on:
   workflow_call:
     secrets:
+      NEXUS_REPO_PASSWORD:
+        required: false
       TEAMS_IDN_WH_URL:
         required: false
 
