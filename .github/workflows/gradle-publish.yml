@@ -10,6 +10,7 @@ on:
 
 jobs:
   gradle-publish:
+    name: Gradle Publish
 
     runs-on: ubuntu-latest
 
