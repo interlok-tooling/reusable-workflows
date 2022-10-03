@@ -27,7 +27,7 @@ jobs:
         continue-on-error: true
         # Only minor or patch versions
         if: steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major'
-        uses: actions/github-script@v6.2.0
+        uses: actions/github-script@v6.3.1
         with:
           script: |
             // List of dependencies that can be auto approved and merged
