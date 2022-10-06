@@ -49,7 +49,7 @@ jobs:
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
-        name: spotbugs-report
+        name: jacoco-report
         path: '*/build/reports/jacoco/test/html/'
         retention-days: 2
     - name: codecov.io
