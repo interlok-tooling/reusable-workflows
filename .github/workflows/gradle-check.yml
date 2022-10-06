@@ -36,10 +36,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: reports
-        path: |
-            "*/build/reports/tests/test/index.html"
-            "*/build/reports/spotbugs/main.html"
-            "*/build/reports/jacoco/test/html/"
+        path: '*/build/reports/tests/test/index.html'
         retention-days: 2
     - name: codecov.io
       if: ${{ !github.event.repository.private }}
