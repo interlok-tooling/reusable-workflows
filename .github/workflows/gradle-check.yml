@@ -31,12 +31,26 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_repoUsername: ${{  secrets.NEXUS_REPO_PASSWORD && 'deployment' || '' }}
         ORG_GRADLE_PROJECT_repoPassword: ${{ secrets.NEXUS_REPO_PASSWORD }}
-    - name: Upload Report Files
+    - name: Upload Test Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
-        name: reports
-        path: '*/build/reports/tests/test/index.html'
+        name: test-report
+        path: '*/build/reports/tests/test/'
+        retention-days: 2
+    - name: Upload Spotbugs Report
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: spotbugs-report
+        path: '*/build/reports/spotbugs/'
+        retention-days: 2
+    - name: Upload Jacoco Report
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: spotbugs-report
+        path: '*/build/reports/jacoco/test/html/'
         retention-days: 2
     - name: codecov.io
       if: ${{ !github.event.repository.private }}
