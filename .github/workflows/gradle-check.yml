@@ -7,6 +7,12 @@ on:
         required: false
       TEAMS_IDN_WH_URL:
         required: false
+    inputs:
+      disable-dependency-check:
+        description: 'Disable OWASP dependency check step'
+        default: false
+        required: false
+        type: boolean
 
 jobs:
   gradle-check:
@@ -56,6 +62,7 @@ jobs:
       if: ${{ !github.event.repository.private }}
       uses: codecov/codecov-action@v3.1.1
     - name: Gradle Dependency Check Analyze
+      if: ${{ inputs.disable-dependency-check != true }}
       run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze
     - name: Notify Teams About Failure and Recovery
       if: ${{ github.event.secrets.TEAMS_IDN_WH_URL }}
