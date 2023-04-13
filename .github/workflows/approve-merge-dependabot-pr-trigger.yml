@@ -1,0 +1,86 @@
+name: Approve And Merge Dependabot PR
+
+on:
+  workflow_call:
+    secrets:
+      DEPENDABOT_APPROVE_MERGE_GITHUB_TOKEN:
+        required: true
+
+# Dependabot doesn't have access to secrets
+# which means the private github package repo isn't
+# accessible via a standard PR github action.
+# https://github.com/dependabot/dependabot-core/issues/3253#issuecomment-852541544
+# This then triggers approve-merge-dependabot-pr.yml
+jobs:
+  approve-merge-trigger:
+    name: Approve And Merge Dependabot PR Trigger
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pull-requests: write
+      issues: write
+    #if: ${{ github.event.pull_request.user.login == 'dependabot[bot]' }}
+    if: ${{ github.actor }}
+    # Perform the auto approve action only when the PR is raised by dependabot
+    steps:
+    - name: Find Current PR
+      uses: jwalton/gh-find-current-pr@v1
+      id: find-current-pr
+      with:
+        github-token: ${{ github.token }}
+        state: open
+        sha: ${{ github.event.pull_request.head.sha || github.event.workflow_run.head_sha || github.sha }}
+
+      - name: Dependabot Metadata
+        id: dependabot-metadata
+        uses: dependabot/fetch-metadata@v1.3.6
+        with:
+          github-token: "${{ secrets.GITHUB_TOKEN }}" # read only
+        # The following properties are now available:
+        #  - steps.dependabot-metadata.outputs.dependency-names
+        #  - steps.dependabot-metadata.outputs.dependency-type
+        #  - steps.dependabot-metadata.outputs.update-type
+      - name: Check If Should Approve And Merge
+        id: check-approve-merge
+        continue-on-error: true
+        # Only minor or patch versions
+        if: steps.dependabot-metadata.outputs.update-type != 'version-update:semver-major'
+        uses: actions/github-script@v6.4.1
+        with:
+          script: |
+            // List of dependencies that can be auto approved and merged
+            const validDependencies = ["mockito-core","jackson-bom","io.freefair.lombok","com.github.spotbugs","org.owasp.dependencycheck","grpc-protobuf","protobuf-java","grpc-google-cloud-pubsub-v1","google-cloud-pubsub","aws-java-sdk-core","twilio","jnats","activemq-broker","org.drools",""]
+            // List of dependencies updated in the PR
+            const prDependencies = "${{ steps.dependabot-metadata.outputs.dependency-names }}"
+            function hasAtLeastOneDependency() {
+              for (const dependency of validDependencies) {
+                if (prDependencies.includes(dependency)) {
+                  return true;
+                }
+              }
+              return false;
+            }
+            return hasAtLeastOneDependency()
+          result-encoding: string
+    - name: Trigger Approve And Merge
+      uses: actions/github-script@v6
+      env:
+        event_type: "approve-merge-dependabot-pr"
+        event_payload: |
+          {
+            "branch" : "${{ github.head_ref }}",
+            "sha": "${{ github.event.pull_request.head.sha }}",
+            "pull_request": "${{ steps.find-current-pr.outputs.pr }}",
+            "auto-approve-merge": "${{ steps.check-approve-merge.outputs.result }}",
+            "update-type": "${{ steps.dependabot-metadata.outputs.update-type }}"
+          }
+      with:
+        script: |
+          const { evt_payload , evt_type } = process.env
+          console.log(evt_payload)
+          github.rest.repos.createDispatchEvent({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              event_type: event_type,
+              event_payload: JSON.parse(event_payload)
+          })
