@@ -77,7 +77,7 @@ jobs:
       with:
         script: |
           const { event_payload , event_type } = process.env
-          console.log(evt_payload)
+          console.log(event_payload)
           github.rest.repos.createDispatchEvent({
               owner: context.repo.owner,
               repo: context.repo.repo,
