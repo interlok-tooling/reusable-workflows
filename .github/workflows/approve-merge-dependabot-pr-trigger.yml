@@ -82,5 +82,5 @@ jobs:
               owner: context.repo.owner,
               repo: context.repo.repo,
               event_type: event_type,
-              event_payload: JSON.parse(event_payload)
+              client_payload: JSON.parse(event_payload)
           })
