@@ -46,14 +46,14 @@ jobs:
       - name: Approve a Dependabot PR If Not Already Approved
         continue-on-error: true
         # Only if the check-approve-merge script return true (minor or patch versions and valid dependencies)
-        if:  ${{ github.event.client_payload.auto-approve-merge == 'true' }}
+        if:  ${{ inputs.auto-approve-merge == 'true' }}
         run: gh pr review --approve
         env:
           GH_TOKEN: ${{secrets.DEPENDABOT_APPROVE_MERGE_GITHUB_TOKEN}}
       - name: Merge a Dependabot PR
         continue-on-error: true
         # Only if the check-approve-merge script return true (minor or patch versions and valid dependencies)
-        if:  ${{ inputs.automerge == 'true' }}
+        if:  ${{ inputs.auto-approve-merge == 'true' }}
         # Auto merge the PR using dependabot command '@dependabot merge'
         run: gh pr comment --body "@dependabot merge"
         env:
