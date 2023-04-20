@@ -54,7 +54,7 @@ jobs:
         continue-on-error: true
         # Only if the check-approve-merge script return true (minor or patch versions and valid dependencies)
         if:  ${{ inputs.auto-approve-merge == 'true' }}
-        # Auto merge the PR using dependabot command '@dependabot merge'
-        run: gh pr comment --body "@dependabot merge"
+        # Auto merge the PR if all the check have passed
+        run: gh pr merge --rebase --auto
         env:
           GH_TOKEN: ${{secrets.DEPENDABOT_APPROVE_MERGE_GITHUB_TOKEN}}
