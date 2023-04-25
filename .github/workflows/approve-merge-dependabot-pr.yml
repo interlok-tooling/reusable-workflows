@@ -39,6 +39,13 @@ jobs:
     steps:
       - name: Echo Info
         run: echo "Approve and merge PR ${{ inputs.pull_request_title }} (${{ inputs.pull_request }})"    
+      - name: Wait For PR Checks to succeed
+        uses: lewagon/wait-on-check-action@v1.3.1
+        with:
+          ref: ${{ inputs.branch }}
+          running-workflow-name: 'Approve And Merge Dependabot PR'
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          wait-interval: 10
       - name: Checkout branch
         uses: actions/checkout@v3
         with:
