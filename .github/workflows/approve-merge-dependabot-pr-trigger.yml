@@ -49,12 +49,12 @@ jobs:
       with:
         script: |
           // List of dependencies that can be auto approved and merged
-          const validDependencies = ["mockito-core","jackson-bom","io.freefair.lombok","com.github.spotbugs","org.owasp.dependencycheck","grpc-protobuf","protobuf-java","grpc-google-cloud-pubsub-v1","google-cloud-pubsub","aws-java-sdk-core","twilio","jnats","activemq-broker","org.drools",""]
+          const validDependencies = ["mockito-core","jackson-bom","io.freefair.lombok","com.github.spotbugs","org.owasp.dependencycheck","grpc-protobuf","protobuf-java","grpc-google-cloud-pubsub-v1","google-cloud-pubsub","aws-java-sdk-core","twilio","jnats","activemq-broker","org.drools"]
           // List of dependencies updated in the PR
           const prDependencies = "${{ steps.dependabot-metadata.outputs.dependency-names }}"
           function hasAtLeastOneDependency() {
             for (const dependency of validDependencies) {
-              if (prDependencies.includes(dependency)) {
+              if (dependency != "" && prDependencies.includes(dependency)) {
                return true;
               }
             }
