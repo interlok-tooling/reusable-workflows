@@ -13,12 +13,17 @@ on:
         default: false
         required: false
         type: boolean
+      runs-on:
+        description: 'Runner lable, default to ubuntu-latest'
+        default: 'ubuntu-latest'
+        required: false
+        type: string
 
 jobs:
   gradle-publish:
     name: Gradle Publish
 
-    runs-on: ubuntu-latest
+    runs-on: ${{ inputs.runs-on }}
 
     steps:
     - name: Checkout
