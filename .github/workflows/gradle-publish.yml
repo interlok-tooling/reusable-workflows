@@ -44,7 +44,7 @@ jobs:
         ORG_GRADLE_PROJECT_repoPassword: ${{ secrets.NEXUS_REPO_PASSWORD }}
     - name: codecov.io
       if: ${{!github.event.repository.private}}
-      uses: codecov/codecov-action@v3.1.3
+      uses: codecov/codecov-action@v3.1.4
     - name: Gradle Dependency Check Analyze
       if: ${{ inputs.disable-dependency-check != true }}
       run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze
