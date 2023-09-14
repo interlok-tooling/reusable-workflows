@@ -1,3 +1,4 @@
+# Use by test projects in github.com/interlok-testing
 name: Gradle Check Test Report
 
 on:
