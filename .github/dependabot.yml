@@ -28,7 +28,6 @@ updates:
     allow:
       - dependency-type: "all"
     reviewers:
-      - mcwarman
       - aaron-mcgrath-adp
       - sebastien-belin-adp
       - higgyfella
