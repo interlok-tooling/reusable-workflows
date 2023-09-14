@@ -1,5 +1,5 @@
 # Use by test projects in github.com/interlok-testing
-name: Gradle Check Test Report
+name: Gradle Check Test Project
 
 on:
   workflow_call:
@@ -21,7 +21,7 @@ concurrency:
 
 jobs:
   gradle-check:
-    name: Gradle Check Test Report
+    name: Gradle Check Test Project
 
     runs-on: ubuntu-latest
 
