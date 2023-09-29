@@ -54,21 +54,21 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: test-report
-        path: '*/build/reports/tests/test/'
+        path: '**/build/reports/tests/test/'
         retention-days: 2
     - name: Upload Spotbugs Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: spotbugs-report
-        path: '*/build/reports/spotbugs/'
+        path: '**/build/reports/spotbugs/'
         retention-days: 2
     - name: Upload Jacoco Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
       with:
         name: jacoco-report
-        path: '*/build/reports/jacoco/test/html/'
+        path: '**/build/reports/jacoco/test/html/'
         retention-days: 2
     - name: codecov.io
       if: ${{!github.event.repository.private}}
@@ -87,7 +87,7 @@ jobs:
       uses: actions/upload-artifact@v3
       with:
         name: owasp-dependency-check-report
-        path: '*/build/reports/dependency-check-report.html'
+        path: '**/build/reports/dependency-check-report.html'
         retention-days: 2
     - name: Publish package
       if: success()
