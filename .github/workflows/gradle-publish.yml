@@ -37,11 +37,18 @@ jobs:
       uses: gradle/gradle-build-action@v2
       with:
         gradle-version: wrapper
+    - name: Cache SonarCloud packages
+      uses: actions/cache@v3
+      with:
+        path: ~/.sonar/cache
+        key: ${{ runner.os }}-sonar
     - name: Execute Gradle build
-      run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon -PverboseTests=true check
+      run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon -PverboseTests=true check sonar --info
       env:
         ORG_GRADLE_PROJECT_repoUsername: deployment
         ORG_GRADLE_PROJECT_repoPassword: ${{ secrets.NEXUS_REPO_PASSWORD }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Upload Test Report
       if: ${{ always() }}
       uses: actions/upload-artifact@v3
