@@ -72,17 +72,8 @@ jobs:
     - name: codecov.io
       if: ${{ !github.event.repository.private }}
       uses: codecov/codecov-action@v3.1.4
-    - name: Check For Sonar Token Secret
-      id: check-sonar-token
-      # perform secret check & put boolean result as an output
-      run: |
-        if [ "${{ secrets.SONAR_TOKEN }}" != '' ]; then
-          echo "sonar-token-exists=true" >> $GITHUB_OUTPUT;
-        else
-          echo "sonar-token-exists=false" >> $GITHUB_OUTPUT;
-        fi
     - name: Execute Sonar Analyse
-      if: needs.check-sonar-token.outputs.sonar-token-exists == 'true'
+      if: env.SONAR_TOKEN != null
       run: ./gradlew sonar --info
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}  # Needed to get PR information, if any
