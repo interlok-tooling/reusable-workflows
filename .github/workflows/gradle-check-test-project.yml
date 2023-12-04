@@ -53,3 +53,9 @@ jobs:
       uses: interlok-tooling/notify-teams@main
       with:
         teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
+    - name: Upload Reports
+      if: ${{ always() }}
+      uses: actions/upload-artifact@v3
+      with:
+        name: reports
+        path: '**/build/reports/'
