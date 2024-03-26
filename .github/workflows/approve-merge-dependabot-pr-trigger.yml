@@ -33,7 +33,7 @@ jobs:
 
     - name: Dependabot Metadata
       id: dependabot-metadata
-      uses: dependabot/fetch-metadata@v1.6.0
+      uses: dependabot/fetch-metadata@v1.7.0
       with:
         github-token: "${{ secrets.GITHUB_TOKEN }}" # read only
         # The following properties are now available:
