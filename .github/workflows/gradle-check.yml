@@ -5,6 +5,8 @@ on:
     secrets:
       NEXUS_REPO_PASSWORD:
         required: false
+      CODECOV_TOKEN:
+        required: false
       SONAR_TOKEN:
         required: false
       TEAMS_IDN_WH_URL:
