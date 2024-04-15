@@ -40,7 +40,7 @@ jobs:
       - name: Echo Info
         run: echo "Approve and merge PR ${{ inputs.pull_request_title }} (${{ inputs.pull_request }})"    
       - name: Wait For PR Checks to succeed
-        uses: lewagon/wait-on-check-action@v1.3.3
+        uses: lewagon/wait-on-check-action@v1.3.4
         with:
           ref: ${{ inputs.branch }}
           running-workflow-name: 'Approve And Merge Dependabot PR'
