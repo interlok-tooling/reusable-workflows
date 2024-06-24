@@ -75,7 +75,7 @@ jobs:
         retention-days: 2
     - name: codecov.io
       if: ${{ !github.event.repository.private }}
-      uses: codecov/codecov-action@v4.2.0
+      uses: codecov/codecov-action@v4.5.0
       env:
         CODECOV_TOKEN: ${{ secrets.CODECOV_TOKEN }}
     - name: Execute Sonar Analyse
