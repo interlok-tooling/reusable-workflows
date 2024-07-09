@@ -5,6 +5,8 @@ on:
     secrets:
       NEXUS_REPO_PASSWORD:
         required: true
+      NVD_API_KEY:
+        required: false
       CODECOV_TOKEN:
         required: false
       SONAR_TOKEN:
@@ -88,6 +90,8 @@ jobs:
     - name: Gradle Dependency Check Analyze
       if: ${{ inputs.disable-dependency-check != true }}
       run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze
+      env:
+        NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     - name: Upload OWASP Dependency Check Report
       if: ${{ inputs.disable-dependency-check != true }}
       uses: actions/upload-artifact@v4
