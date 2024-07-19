@@ -89,13 +89,13 @@ jobs:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
     - name: Gradle Dependency Check Analyze
       # Temporarily disable dependencyCheckAnalyze as it doesn't work with the NVD API
-      if: ${{ false && inputs.disable-dependency-check != true }}
-      run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze
+      if: ${{ inputs.disable-dependency-check != true }}
+      run: ./gradlew -Djava.security.egd=file:/dev/./urandom -Dorg.gradle.console=plain --no-daemon dependencyCheckAnalyze -PdependencyCheckNvdDatafeedUrl='https://raw.githubusercontent.com/interlok-tooling/nvd-cves-mirror/nvd-cache/nvd_api_cache/'
       env:
         NVD_API_KEY: ${{ secrets.NVD_API_KEY }}
     - name: Upload OWASP Dependency Check Report
       # Temporarily disable dependencyCheckAnalyze as it doesn't work with the NVD API
-      if: ${{ false && inputs.disable-dependency-check != true }}
+      if: ${{ inputs.disable-dependency-check != true }}
       uses: actions/upload-artifact@v4
       with:
         name: owasp-dependency-check-report
