@@ -93,7 +93,7 @@ jobs:
 #      with:
 #        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
 
-  gradle-check:
+  dependency-check:
     name: Dependency Check Analyze
 
     if: ${{ inputs.disable-dependency-check != true && github.actor != 'dependabot[bot]' }}
