@@ -98,8 +98,9 @@ jobs:
         name: owasp-dependency-check-report
         path: '**/build/reports/dependency-check-report.html'
         retention-days: 2
-    - name: Notify Teams About Failure and Recovery
-      if: ${{ github.event.secrets.TEAMS_IDN_WH_URL }}
-      uses: interlok-tooling/notify-teams@main
-      with:
-        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
+# We don't use team anymore. We need to do something for google chat
+#    - name: Notify Teams About Failure and Recovery
+#      if: ${{ github.event.secrets.TEAMS_IDN_WH_URL }}
+#      uses: interlok-tooling/notify-teams@main
+#      with:
+#        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}

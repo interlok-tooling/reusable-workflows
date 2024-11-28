@@ -107,8 +107,9 @@ jobs:
       env:
         ORG_GRADLE_PROJECT_repoUsername: deployment
         ORG_GRADLE_PROJECT_repoPassword: ${{ secrets.NEXUS_REPO_PASSWORD }}
-    - name: Notify Teams About Failure and Recovery
-      if: always()
-      uses: interlok-tooling/notify-teams@main
-      with:
-        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
+# We don't use team anymore. We need to do something for google chat
+#    - name: Notify Teams About Failure and Recovery
+#      if: ${{ github.event.secrets.TEAMS_IDN_WH_URL }}
+#      uses: interlok-tooling/notify-teams@main
+#      with:
+#        teams-webhook-url: ${{ secrets.TEAMS_IDN_WH_URL }}
