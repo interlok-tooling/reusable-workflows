@@ -5,6 +5,8 @@ on:
     secrets:
       NEXUS_REPO_PASSWORD:
         required: true
+      NVD_API_KEY:
+        required: false        
       TEAMS_IDN_WH_URL:
         required: true
     inputs:
