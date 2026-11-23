@@ -14,6 +14,11 @@ on:
       TEAMS_IDN_WH_URL:
         required: true
     inputs:
+      java-version:
+        description: 'Java version to use'
+        default: '17'
+        required: false
+        type: string
       disable-dependency-check:
         description: 'Disable OWASP dependency check step'
         default: false
@@ -56,11 +61,11 @@ jobs:
       uses: actions/checkout@v4
       with:
         fetch-depth: 0 # Shallow clones is disabled for a better relevancy of sonar analysis
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         distribution: temurin
-        java-version: 17
+        java-version: ${{ inputs.java-version }}
     - name: Setup Gradle
       uses: gradle/actions/setup-gradle@v4
       with:

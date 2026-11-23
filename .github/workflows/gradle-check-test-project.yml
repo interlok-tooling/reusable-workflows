@@ -11,6 +11,11 @@ on:
       INTERLOK_LICENSE_KEY:
         required: false
     inputs:
+      java-version:
+        description: 'Java version to use'
+        default: '17'
+        required: false
+        type: string
       disable-dependency-check:
         description: 'Disable OWASP dependency check step'
         default: false
@@ -30,11 +35,11 @@ jobs:
     steps:
     - name: Checkout
       uses: actions/checkout@v4
-    - name: Set up JDK 17
+    - name: Set up JDK
       uses: actions/setup-java@v4
       with:
         distribution: temurin
-        java-version: 17
+        java-version: ${{ inputs.java-version }}
     - name: Setup Gradle
       uses: gradle/gradle-build-action@v3
       with:
